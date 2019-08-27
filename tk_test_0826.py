@@ -121,13 +121,77 @@ class button_view(ttk.Frame):
     def create_add_button(self):
         button_frame = ttk.Frame(self)
         button_frame.pack()
-        self.role_button = ttk.Button(button_frame, text="Get Info")
-        self.user_button = ttk.Button(button_frame, text="Create User")
-        self.role_button = ttk.Button(button_frame, text="Create Role")
-        self.key_button = ttk.Button(button_frame, text="Create API key")
+        self.get_info_button = ttk.Button (
+                                            button_frame,
+                                            text="Get Info",
+                                            )
+        self.user_button = ttk.Button(
+                                        button_frame,
+                                        text="Create User",
+                                        command=self.user_sub_window
+                                        )
+        self.role_button = ttk.Button(
+                                        button_frame,
+                                        text="Create Role",
+                                        command=self.role_sub_window
+                                        )
+        self.key_button = ttk.Button(
+                                        button_frame,
+                                        text="Create API key",
+                                        command=self.key_sub_window
+                                        )
+        self.get_info_button.pack(fill="x")
         self.user_button.pack(fill="x")
         self.role_button.pack(fill="x")
         self.key_button.pack(fill="x")
+
+    def user_sub_window(self):
+        #サブウィンドウ作成
+        self.sub_win = Toplevel()
+
+        #サブウィンドウの画面サイズ
+        self.sub_win.geometry("300x200")
+
+        #サブウィンドウのボタン生成
+        self.sub_win.button = ttk.Button(
+                                            self.sub_win,
+                                            text="Create",
+                                            width=str("Create"),
+                                            command=self.sub_win.destroy
+                                        )
+        self.sub_win.button.pack()
+
+    def role_sub_window(self):
+        #サブウィンドウ作成
+        self.sub_win = Toplevel()
+
+        #サブウィンドウの画面サイズ
+        self.sub_win.geometry("300x200")
+
+        #サブウィンドウのボタン生成
+        self.sub_win.button = ttk.Button(
+                                            self.sub_win,
+                                            text="Create",
+                                            width=str("Create"),
+                                            command=self.sub_win.destroy
+                                        )
+        self.sub_win.button.pack()
+
+    def key_sub_window(self):
+        #サブウィンドウ作成
+        self.sub_win = Toplevel()
+
+        #サブウィンドウの画面サイズ
+        self.sub_win.geometry("300x200")
+
+        #サブウィンドウのボタン生成
+        self.sub_win.button = ttk.Button(
+                                            self.sub_win,
+                                            text="Create",
+                                            width=str("Create"),
+                                            command=self.sub_win.destroy
+                                        )
+        self.sub_win.button.pack()
 
 class overview(ttk.Frame):
     """
