@@ -152,14 +152,26 @@ class button_view(ttk.Frame):
         #サブウィンドウの画面サイズ
         self.sub_win.geometry("300x200")
 
+        self.sub_win_frame = ttk.Frame(self.sub_win)
+        self.sub_win_frame.pack()
+        self.sub_win_label = ttk.Label(self.sub_win_frame, text="name")
+        self.sub_win_label.pack()
+
+
+        self.sub_win_entry = ttk.Entry(self.sub_win, width=20)
+        self.sub_win_entry.pack()
+
         #サブウィンドウのボタン生成
-        self.sub_win.button = ttk.Button(
+        self.sub_win_button = ttk.Button(
                                             self.sub_win,
                                             text="Create",
                                             width=str("Create"),
                                             command=self.sub_win.destroy
                                         )
-        self.sub_win.button.pack()
+        self.sub_win_button.pack()
+        
+
+
 
     def role_sub_window(self):
         #サブウィンドウ作成
@@ -169,13 +181,13 @@ class button_view(ttk.Frame):
         self.sub_win.geometry("300x200")
 
         #サブウィンドウのボタン生成
-        self.sub_win.button = ttk.Button(
+        self.sub_win_button = ttk.Button(
                                             self.sub_win,
                                             text="Create",
                                             width=str("Create"),
                                             command=self.sub_win.destroy
                                         )
-        self.sub_win.button.pack()
+        self.sub_win_button.pack()
 
     def key_sub_window(self):
         #サブウィンドウ作成
@@ -185,13 +197,13 @@ class button_view(ttk.Frame):
         self.sub_win.geometry("300x200")
 
         #サブウィンドウのボタン生成
-        self.sub_win.button = ttk.Button(
+        self.sub_win_button = ttk.Button(
                                             self.sub_win,
                                             text="Create",
                                             width=str("Create"),
                                             command=self.sub_win.destroy
                                         )
-        self.sub_win.button.pack()
+        self.sub_win_button.pack()
 
 class overview(ttk.Frame):
     """
