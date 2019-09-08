@@ -7,7 +7,38 @@ from tkinter import *
 from tkinter.ttk import *
 
 
-class user_view(ttk.Frame):
+class get_info():
+    """
+    APIによる情報取得
+    """
+    #def __init__(self, master=None):
+    #    super().__init__(master=master)
+
+    def get_users_info(self):
+        self.users = {
+            "MasterAdmin":["ja-Jp", "UTC+9", "xxx"],
+            "test_User1":["en-US", "UTC+0", "xxx"],
+            "test_User2":["ja-JP", "UTC+9", "xxx"],
+            }
+        return self.users
+    
+    def get_roles_info(self):
+        self.roles = {
+            "Full Access":["all computers", "policy", "hoge"],
+            "Auditor":["xxx", "xxx", "xxx"],
+            "test Role":["xxx", "xxx", "xxx"],
+            }
+        return self.roles
+
+    def get_api_keys_info(self):
+        self.api_keys = {
+            "API Key1":["test1", "en-US", "1"],
+            "API Key2":["test2", "ja-JP", "2"],
+            "API Key3":["test3", "ja-JP", "3"],
+            }
+        return self.api_keys
+
+class users_tree_view(ttk.Frame):
     """
     Usersのtreeview設定
     """
@@ -19,28 +50,24 @@ class user_view(ttk.Frame):
     def create_widgets(self):
         self.tree = ttk.Treeview(self)
         self.tree.pack()
-    
-        menu = {
-            "Food":["Hamburger", "Beef steak", "Salad"],
-            "Softdrink":["Coke", "Cider", "Tea"],
-            "Alcohol":["Beer", "Wine", "Cocktail"],
-            }
 
-        for p in menu:
+        Users = get_info().get_users_info()
+
+        for x in Users:
             root_node = self.tree.insert(
                 "",     #最上位なのでparentは空文字
                 "end",
-                text=p,
+                text=x,
                 )
             #辞書の要素を挿入
-            for m in menu[p]:
+            for y in Users[x]:
                 self.tree.insert(
                     root_node,  #parentはキーの認識番号
                     "end",
-                    text=m,
+                    text=y,
                     )
 
-class role_view(ttk.Frame):
+class roles_tree_view(ttk.Frame):
     """
     Rolesのtreeview設定
     """
@@ -53,27 +80,23 @@ class role_view(ttk.Frame):
         self.tree = ttk.Treeview(self)
         self.tree.pack()
 
-        menu = {
-            "Food":["Hamburger", "Beef steak", "Salad"],
-            "Softdrink":["Coke", "Cider", "Tea"],
-            "Alcohol":["Beer", "Wine", "Cocktail"],
-            }
+        Roles = get_info().get_roles_info()
 
-        for p in menu:
+        for x in Roles:
             root_node = self.tree.insert(
                 "",     #最上位なのでparentは空文字
                 "end",
-                text=p,
+                text=x,
                 )
             #辞書の要素を挿入
-            for m in menu[p]:
+            for y in Roles[x]:
                 self.tree.insert(
                     root_node,  #parentはキーの認識番号
                     "end",
-                    text=m,
+                    text=y,
                     )       
 
-class key_view(ttk.Frame):
+class keys_tree_view(ttk.Frame):
     """
     Api Keysのtreeview設定
     """
@@ -86,24 +109,20 @@ class key_view(ttk.Frame):
         self.tree = ttk.Treeview(self)
         self.tree.pack()
 
-        menu = {
-            "Food":["Hamburger", "Beef steak", "Salad"],
-            "Softdrink":["Coke", "Cider", "Tea"],
-            "Alcohol":["Beer", "Wine", "Cocktail"],
-            }
+        API_keys = get_info().get_api_keys_info()
 
-        for p in menu:
+        for x in API_keys:
             root_node = self.tree.insert(
                 "",     #最上位なのでparentは空文字
                 "end",
-                text=p,
+                text=x,
                 )
             #辞書の要素を挿入
-            for m in menu[p]:
+            for y in API_keys[x]:
                 self.tree.insert(
                     root_node,  #parentはキーの認識番号
                     "end",
-                    text=m,
+                    text=y,
                     )
 
 class button_view(ttk.Frame):
@@ -226,21 +245,21 @@ class overview(ttk.Frame):
         user_frame.pack(side="left")
         user_frame_label = ttk.LabelFrame(user_frame, text="Users")
         user_frame_label.pack(side="left")
-        self.tree = user_view(user_frame_label)
+        self.tree = users_tree_view(user_frame_label)
 
     def create_role_frame(self):
         role_frame = ttk.Frame(self)
         role_frame.pack(side="left")
         role_frame_label = ttk.LabelFrame(role_frame, text="Roles", width=200)
         role_frame_label.pack(side="left")
-        self.tree = role_view(role_frame_label)
+        self.tree = roles_tree_view(role_frame_label)
 
     def create_key_frame(self):
         key_frame = ttk.Frame(self)
         key_frame.pack(side="left")
         key_frame_label = ttk.LabelFrame(key_frame, text="API Keys")
         key_frame_label.pack(side="left")
-        self.tree = key_view(key_frame_label)
+        self.tree = keys_tree_view(key_frame_label)
 
     def create_button_frame(self):
         button_frame = ttk.Frame(self, width=20)
