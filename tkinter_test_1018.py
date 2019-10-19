@@ -8,7 +8,6 @@ import tkinter
 from tkinter import ttk
 
 
-
 class get_info():
     """
     APIによる情報取得
@@ -488,6 +487,8 @@ tkinterの枠作成
 """
 
 def create_frame(root):
+
+    #フレーム作成
     f0 = ttk.LabelFrame(root, width=250, height=200, text='Users')
     f1 = ttk.LabelFrame(root, width=250, height=200, text='Roles')
     f2 = ttk.LabelFrame(root, width=250, height=200, text='API keys')
@@ -512,6 +513,7 @@ def create_frame(root):
     f3.columnconfigure(0, weight=1)
     f3.grid_propagate(False)
 
+    #フレーム f3にボタンを配置
     button0 = ttk.Button(f3, text='Get Info')
     button1 = ttk.Button(f3, text='Create Users', command=create_user_window)
     button2 = ttk.Button(f3, text='Create Roles', command=create_role_window)
@@ -523,6 +525,7 @@ def create_frame(root):
     button3.grid(row=4, column=0, sticky='EW')
 
 
+    #フレーム f0にtreeを準備
     tree0 = ttk.Treeview(f0)
     tree0["columns"]=(1,2,3)
     tree0.heading("#0", text="")
@@ -537,13 +540,14 @@ def create_frame(root):
     xScrollbar.config(command=tree0.xview)
     yScrollbar = ttk.Scrollbar(f0, orient='vertical', command=tree0.yview)
     yScrollbar.config(command=tree0.yview)
+
     tree0.config(xscrollcommand=xScrollbar.set, yscrollcommand=yScrollbar.set)
 
     tree0.grid(row=0, column=0, sticky='NEWS')
     xScrollbar.grid(row=1, column=0, sticky='EW')
     yScrollbar.grid(row=0, column=1, sticky='NS')
 
-
+    #フレーム f1にtreeを準備
     tree1 = ttk.Treeview(f1)
     tree1["columns"]=(1,2,3)
     tree1.heading("#0", text="")
@@ -566,7 +570,7 @@ def create_frame(root):
     xScrollbar1.grid(row=1, column=0, sticky='EW')
     yScrollbar1.grid(row=0, column=1, sticky='NS')
 
-
+    #フレーム f2にtreeを準備
     tree2 = ttk.Treeview(f2)
     tree2["columns"]=(1,2,3)
     tree2.heading("#0", text="")
@@ -589,7 +593,9 @@ def create_frame(root):
     xScrollbar2.grid(row=1, column=0, sticky='EW')
     yScrollbar2.grid(row=0, column=1, sticky='NS')
 
+    #準備したtreeに情報を書き込むため、return
     return tree0, tree1, tree2
+
 
 def create_user_window():
     #サブウィンドウ作成
@@ -617,7 +623,6 @@ def create_user_window():
 
     #サブウィンドウのframe
     sub_win_frame = tkinter.Frame(canvas)
-    #sub_win_frame.grid(row=0, column=0)
     canvas.create_window(0,0, window=sub_win_frame, anchor='nw')
 
     user_item =[
@@ -660,6 +665,8 @@ def create_user_window():
                                         width=str("Create"),
                                         command=sub_win.destroy
                                     )
+                                    
+    #サブウィンドウのボタン配置                              
     sub_win_button.grid(row=item_length + 1, column=1)
 
 
@@ -689,7 +696,6 @@ def create_role_window():
 
     #サブウィンドウのframe
     sub_win_frame = tkinter.Frame(canvas)
-    #sub_win_frame.grid(row=0, column=0)
     canvas.create_window(0,0, window=sub_win_frame, anchor='nw')
     
 
@@ -724,6 +730,8 @@ def create_role_window():
                                         width=str("Create"),
                                         command=sub_win.destroy
                                     )
+    
+    #サブウィンドウのボタン配置
     sub_win_button.grid(row=item_length + 1, column=1)
 
 
@@ -753,7 +761,6 @@ def create_apikey_window():
 
     #サブウィンドウのframe
     sub_win_frame = tkinter.Frame(canvas)
-    #sub_win_frame.grid(row=0, column=0)
     canvas.create_window(0,0, window=sub_win_frame, anchor='nw')
 
     user_item =[
@@ -787,6 +794,8 @@ def create_apikey_window():
                                         width=str("Create"),
                                         command=sub_win.destroy
                                     )
+    
+    #サブウィンドウのボタン配置 
     sub_win_button.grid(row=item_length + 1, column=1)
 
 
@@ -798,6 +807,7 @@ def create_apikey_window():
 
 def tree_insert(tree0, tree1, tree2, user_data, role_data, apikey_data):
 
+    #辞書内辞書を含め、keyを全て取得
     def get_keys(target_dict):
         for key, value in target_dict.items():
             if not isinstance (value, dict):
@@ -806,6 +816,7 @@ def tree_insert(tree0, tree1, tree2, user_data, role_data, apikey_data):
                 for child in get_keys(value):
                     yield key + '.' + child
 
+    #get_keys関数で取得したkeyを利用して、valueを全て取得
     def get_value(target_dict, target_branch):
         limbs = target_branch.split('.')
         leaf = target_dict
@@ -819,6 +830,7 @@ def tree_insert(tree0, tree1, tree2, user_data, role_data, apikey_data):
             "end",
             text=user_data[x]['username'],
             )
+
         #辞書の要素を挿入
         for y in list(get_keys(user_data[x])):
             value = get_value(user_data[x], y)
@@ -873,9 +885,6 @@ def main():
     apikey_data = data.get_api_keys_info()
 
     result = create_frame(root)
-    #create_user_window()
-    #create_role_window()
-    #create_apikey_window()
 
     tree_insert(result[0], result[1], result[2], user_data, role_data, apikey_data)
 
